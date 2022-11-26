@@ -1,0 +1,13 @@
+dist/
+node_modules/
+project/project/
+target/
+.idea/
+.bloop/
+.vscode/
+.js/
+.jvm/
+.idea/
+/yarn-error.log
+.DS_Store
+.bsp/sbt.json

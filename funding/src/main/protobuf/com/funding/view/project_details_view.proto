@@ -1,0 +1,49 @@
+syntax = "proto3";
+
+package com.funding.view;
+
+import "kalix/annotations.proto";
+import "google/api/annotations.proto";
+import "com/funding/entity/project_entity.proto";
+import "com/funding/view/project_details_view_shared.proto";
+
+service ProjectDetailsView {
+  option (kalix.codegen) = {
+    view : {}
+  };
+
+  rpc GetProjectDetailsById(GetProjectRequest) returns (ProjectDetailsResponse) {
+    option (kalix.method).view.query = {
+      query : "SELECT * "
+          "  FROM project_details"
+          " WHERE project_id = :project_id"
+    };
+    option (google.api.http) = {
+      get : "/project/{project_id}/details"
+    };
+  }
+
+  rpc OnMoneyInvested(entity.MoneyInvested) returns (ProjectDetailsResponse) {
+    option (kalix.method).eventing.in = {
+      event_sourced_entity : "project"
+    };
+    option (kalix.method).view.update = {
+      table : "project_details"
+      transform_updates : true
+    };
+  }
+
+  rpc OnProjectDetailsChanged(entity.ProjectDetailsChanged) returns (ProjectDetailsResponse) {
+    option (kalix.method).eventing.in = {
+      event_sourced_entity : "project"
+    };
+    option (kalix.method).view.update = {
+      table : "project_details"
+      transform_updates : true
+    };
+  }
+
+
+}
+message GetProjectRequest { uint32 project_id = 1; }
+

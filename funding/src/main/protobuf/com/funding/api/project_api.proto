@@ -1,0 +1,58 @@
+syntax = "proto3";
+
+import "kalix/annotations.proto";
+import "google/protobuf/empty.proto";
+import "google/api/annotations.proto";
+import "google/protobuf/timestamp.proto";
+import "com/funding/api/project_api_shared.proto";
+
+package com.funding.api;
+
+service ProjectService {
+  option (kalix.codegen) = {
+    event_sourced_entity : {
+      name : "com.funding.entity.Project"
+      entity_type : "project"
+      state : "com.funding.entity.ProjectState"
+      events : [
+        "com.funding.entity.MoneyInvested",
+        "com.funding.entity.ProjectDetailsChanged"
+      ]
+    }
+  };
+
+  rpc Invest(InvestCommand) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      post : "/project/{project_id}/invest"
+      body : "*"
+    };
+  }
+
+  rpc ChangeProjectDetails(ChangeProjectDetailsCommand) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      put : "/project/{project_id}/change"
+      body : "*"
+    };
+  }
+
+  rpc GetProject(GetProjectRequest) returns (Project) {
+    option (google.api.http) = {
+      get : "/project/{project_id}"
+    };
+  }
+}
+
+
+message GetProjectRequest {
+  uint32 project_id = 1 [ (kalix.field).entity_key = true ];
+}
+
+
+message Project {
+  uint32 project_id = 1;
+  double funding = 2;
+  double goal = 3;
+  string title = 4;
+  string description = 5;
+}
+

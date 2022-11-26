@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package com.funding.view;
+
+// the view row, must contain the ID so we can query on it
+message ProjectDetailsResponse {
+  uint32 project_id = 1;
+  repeated EventMessage events = 2;
+}
+message EventMessage {
+  string action = 1;
+  string content = 2;
+}

@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+
+package com.funding.entity;
+
+message MoneyInvested {
+  uint32 project_id = 1;
+  double amount = 2;
+  string user = 3;
+  uint64 date = 4;
+}
+
+message ProjectDetailsChanged {
+  uint32 project_id = 1;
+  double goal = 2;
+  string title = 3;
+  string description = 4;
+  string user = 5;
+  uint64 date = 6;
+}
+
+
+message ProjectState {
+  uint32 project_id = 1;
+  double funded = 2;
+  double goal = 3;
+  string title = 4;
+  string description = 5;
+}
+
+

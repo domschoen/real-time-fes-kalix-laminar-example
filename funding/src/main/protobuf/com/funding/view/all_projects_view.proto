@@ -1,0 +1,61 @@
+syntax = "proto3";
+
+package com.funding.view;
+
+import "kalix/annotations.proto";
+import "google/api/annotations.proto";
+import "com/funding/entity/project_entity.proto";
+import "com/funding/view/project_details_view_shared.proto";
+import "google/protobuf/empty.proto";
+
+service AllProjectsView {
+  option (kalix.codegen) = {
+    view : {}
+  };
+
+  rpc GetAllProjects(google.protobuf.Empty) returns (stream ProjectsResponse) {
+    option (kalix.method).view.query = {
+      query : "SELECT * AS projects "
+          "  FROM projects"
+    };
+    option (google.api.http) = {
+      get : "/projects"
+    };
+  }
+
+  rpc OnMoneyInvested(entity.MoneyInvested) returns (com.funding.entity.ProjectState) {
+    option (kalix.method).eventing.in = {
+      event_sourced_entity : "project"
+    };
+    option (kalix.method).view.update = {
+      table : "projects"
+      transform_updates : true
+    };
+  }
+
+  rpc OnProjectDetailsChanged(entity.ProjectDetailsChanged) returns (com.funding.entity.ProjectState) {
+    option (kalix.method).eventing.in = {
+      event_sourced_entity : "project"
+    };
+    option (kalix.method).view.update = {
+      table : "projects"
+      transform_updates : true
+    };
+  }
+
+
+}
+
+
+message ProjectsResponse {
+  repeated com.funding.entity.ProjectState projects = 1;
+}
+
+//message ProjectSnapshotResponse {
+//  uint32 project_id = 1;
+//  double funded = 2;
+//  double goal = 3;
+//  string title = 4;
+//  string description = 5;
+//}
+

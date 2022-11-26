@@ -1,0 +1,26 @@
+// Copyright 2022 Lightbend Inc.
+
+// All extension points for Kalix
+
+syntax = "proto3";
+
+package kalix;
+
+import "google/protobuf/descriptor.proto";
+
+option go_package = "github.com/lightbend/kalix-go-sdk/kalix;kalix";
+option java_multiple_files = true;
+option java_package = "kalix";
+
+message FieldOptions {
+  // Extension for specifying which field in a message is to be considered an
+  // entity key, for the purposes of associating gRPC calls with entities and
+  // sharding.
+  bool entity_key = 1;
+}
+
+
+extend google.protobuf.FieldOptions {
+  FieldOptions field = 1080;
+}
+

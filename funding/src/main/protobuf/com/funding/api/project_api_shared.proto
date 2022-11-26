@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+import "kalix/annotations.proto";
+
+package com.funding.api;
+
+message InvestCommand {
+  uint32 project_id = 1 [ (kalix.field).entity_key = true ];
+  double amount = 2;
+  string user = 3;
+}
+
+message ChangeProjectDetailsCommand {
+  uint32 project_id = 1 [ (kalix.field).entity_key = true ];
+  double goal = 2;
+  string title = 3;
+  string description = 4;
+  string user = 5;
+}
+
