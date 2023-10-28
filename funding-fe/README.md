@@ -61,25 +61,35 @@ npm install
 
 ## Front-end
 
-1. npm 
+
+
+1. Before running, install npm dependencies
+
+   ```
+   npm install
+   ```
+
+   
+
+2. npm 
 
    ```
    npm start
    ```
 
-2. In another terminal, run this (it make sbt re-compile the front-end on code changes)
+3. In another terminal, run this (it make sbt re-compile the front-end on code changes)
 
    ```
-   sbt ~frontend/fastLinkJS
+   sbt "~frontend/fastLinkJS"
    ```
 
-3. run frontend server 
+4. run frontend server 
 
    ```
-   sbt ~backend/reStart
+   sbt "~backend/reStart"
    ```
 
-4. If you run the Kalix app locally, you to run Chrome by disabling CORS check 
+5. If you run the Kalix app locally, you to run Chrome by disabling CORS check 
 
    ```
    open -n -a /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --args --user-data-dir="/tmp/chrome_dev_test" --disable-web-security
