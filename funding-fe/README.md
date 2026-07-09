@@ -47,6 +47,13 @@ cd ../../../../../../../../../funding-fe/modules/proto/src/main/protobuf/com/fun
 ln -s ../../../../../../../../../funding/src/main/protobuf/com/funding/view/project_details_view_shared.proto .
 ```
 
+Recreate link of scala classes
+
+```
+cd funding-fe/modules/frontend/src/main/scala/com/funding
+ln -s ../../../../../../../../funding/src/main/scala/com/funding/entity/ProjectReplay.scala .
+```
+
 
 
 # Setup npm dependencies
@@ -61,21 +68,45 @@ npm install
 
 ## Front-end
 
+### Python
+
+`node-gyp` utilise Python **3.14**
+
+```
+brew install python@3.11
+npm config set python /opt/homebrew/bin/python3.11
+```
 
 
-1. Before running, install npm dependencies
+
+### Node
+
+You need node version 16
+
+```
+nvm list
+nvm use v16.20.2
+```
+
+### Procedure
+
+
+
+1. compile 
+
+   ```
+   sbt compile
+   ```
+
+   
+
+2. Before running, install npm dependencies
 
    ```
    npm install
    ```
 
    
-
-2. npm 
-
-   ```
-   npm start
-   ```
 
 3. In another terminal, run this (it make sbt re-compile the front-end on code changes)
 
@@ -89,7 +120,13 @@ npm install
    sbt "~backend/reStart"
    ```
 
-5. If you run the Kalix app locally, you to run Chrome by disabling CORS check 
+5. npm 
+
+   ```
+   npm start
+   ```
+
+6. If you run the Kalix app locally, you to run Chrome by disabling CORS check 
 
    ```
    open -n -a /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --args --user-data-dir="/tmp/chrome_dev_test" --disable-web-security

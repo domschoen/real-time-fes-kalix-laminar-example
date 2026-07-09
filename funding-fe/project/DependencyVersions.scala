@@ -1,6 +1,6 @@
 object DependencyVersions {
 
-  val scala              = "2.13.8"
+  val scala              = "2.13.10"
   val laminar            = "0.14.5"
   val `url-dsl`          = "0.4.0"
   val waypoint           = "0.5.0"
